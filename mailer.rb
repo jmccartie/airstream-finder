@@ -12,6 +12,10 @@ class Mailer
         to ENV['MAIL_TO']
         from ENV['MAIL_FROM']
         subject 'New Airstreams Found'
+
+        text_part do
+          body 'This is plain text'
+        end
       end
 
       mail.body = self.body_content
@@ -24,11 +28,12 @@ class Mailer
   def body_content
     str = ""
     entries.each do |entry|
-      str << "#{entry[:title]} - $#{entry[:price]},000\n"
-      str << "----------------\n"
-      str << entry[:description] + "\n"
-      str << entry[:link]
-      str << "\n\n\n"
+      str << "<div>"
+        str << "<h3>#{entry[:title]} - $#{entry[:price]},000</h3>"
+        str << "<p>" + entry[:description] + "</p>"
+        str << "<br />" + entry[:link]
+        str << "\n\n\n"
+      str << "</div>"
     end
     str
   end
