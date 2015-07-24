@@ -14,7 +14,7 @@ class Mailer
         subject 'New Airstreams Found'
       end
 
-      mail.body = self.body_content
+      mail.text_part = self.body_content
       mail.deliver
     else
       puts self.body_content
