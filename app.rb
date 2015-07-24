@@ -15,15 +15,22 @@ unless ENV["RACK_ENV"] == "production"
 end
 
 Mail.defaults do
-  delivery_method :smtp, {
-    :address => 'smtp.sendgrid.net',
-    :port => '587',
-    :domain => 'heroku.com',
-    :user_name => ENV['SENDGRID_USERNAME'],
-    :password => ENV['SENDGRID_PASSWORD'],
-    :authentication => :plain,
-    :enable_starttls_auto => true
-  }
+  if ENV["RACK_ENV"] == "production"
+    delivery_method :smtp, {
+      :address => 'smtp.sendgrid.net',
+      :port => '587',
+      :domain => 'heroku.com',
+      :user_name => ENV['SENDGRID_USERNAME'],
+      :password => ENV['SENDGRID_PASSWORD'],
+      :authentication => :plain,
+      :enable_starttls_auto => true
+    }
+  else
+    delivery_method :smtp, {
+      address: "127.0.0.1",
+      port: 1025
+    }
+  end
 end
 
 ##
