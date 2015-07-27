@@ -4,6 +4,9 @@ require 'open-uri'
 require 'nokogiri'
 require 'logger'
 require 'mail'
+require 'redis'
+require 'json'
+
 require_relative 'parser'
 require_relative 'mailer'
 
@@ -32,6 +35,13 @@ Mail.defaults do
     }
   end
 end
+
+REDIS =
+  if ENV["REDISGREEN_URL"]
+    Redis.new(url: ENV["REDISGREEN_URL"], driver: :hiredis)
+  else
+    Redis.new
+  end
 
 ##
 # Init with high price and search params against the post title
