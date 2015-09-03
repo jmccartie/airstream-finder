@@ -1,6 +1,6 @@
 class Parser
 
-  def self.search(price, search)
+  def self.search(min_price, max_price, search)
     url = "http://www.airstreamclassifieds.com/ad-category/airstream-trailers-for-sale/ads_sort/new_first/"
     wrapper = ".content_left .post-block-out"
     entries = []
@@ -16,7 +16,7 @@ class Parser
       price = node.css(".post-price").first.content.gsub("$", "").to_i
       title = node.css("h3").first.content.gsub("\n", "")
 
-      if price <= price && title =~ /#{search}/
+      if (min_price..max_price).to_a.include?(price) && title =~ /#{search}/
         url = node.css("h3 a").first["href"]
         next if list.include?(url)
         entries << {

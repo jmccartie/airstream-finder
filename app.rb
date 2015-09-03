@@ -50,10 +50,11 @@ REDIS =
 
 class App
 
-  attr_accessor :price, :search, :log
+  attr_accessor :min_price, :max_price, :search, :log
 
   def initialize(opts)
-    @price = opts[:price].to_i
+    @min_price = opts[:min_price].to_i
+    @max_price = opts[:max_price].to_i
     @search = opts[:search]
 
     @log = Logger.new(STDOUT)
@@ -62,7 +63,7 @@ class App
 
   def run
     log.info "Running..."
-    entries = Parser.search(self.price, self.search)
+    entries = Parser.search(self.min_price, self.max_price, self.search)
 
     if entries.any?
       Mailer.new(entries).deliver
@@ -74,4 +75,5 @@ class App
 
 end
 
-App.new(price: ENV["PRICE"], search: ENV["SEARCH"]).run
+# Run the app
+App.new(min_price: ENV["MIN_PRICE"], max_price: ENV["MAX_PRICE"], search: ENV["SEARCH"]).run
