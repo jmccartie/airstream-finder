@@ -1,7 +1,7 @@
 class Parser
 
   def self.search(price, search)
-    url = "http://www.airstreamclassifieds.com/airstream-trailer-search/Late-Model-Airstream-Trailers-For-Sale/year/1988-2014/ads_sort/new_first"
+    url = "http://www.airstreamclassifieds.com/ad-category/airstream-trailers-for-sale/ads_sort/new_first/"
     wrapper = ".content_left .post-block-out"
     entries = []
     list = Parser.get_list()
